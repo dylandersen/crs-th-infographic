@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRS Housing Process Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Geist', sans-serif;
+            background-color: #f4f7f6;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 300px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+                max-height: 350px;
+            }
+        }
+        .flow-connector {
+            width: 4px;
+            height: 3rem;
+            background-color: #00A1B1;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .flow-dot {
+            width: 20px;
+            height: 20px;
+            background-color: #F15A24;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 0 0 2px #F15A24;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .sub-phase-item {
+            display: flex;
+            align-items: flex-start;
+            space-x: 2;
+        }
+        .sub-phase-number {
+            flex-shrink: 0;
+            width: 1.25rem;
+            height: 1.25rem;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0.125rem;
+            margin-right: 0.75rem;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto max-w-6xl p-4 md:p-8">
+
+        <header class="text-center mb-10 md:mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#00A1B1] mb-4">The CRS Housing Process</h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">An infographic visualizing the 8-phase workflow from initial claim to policy holder acceptance.</p>
+        </header>
+
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+
+            <div class="lg:col-span-1">
+                <div class="card">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Key Performance Metric</h2>
+                    <p class="text-gray-600 mb-6">The process is initiated by a contractual obligation to contact the insured within 15 minutes of claim assignment.</p>
+                    <div class="chart-container" style="max-height: 250px;">
+                        <canvas id="kpiChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Stakeholder Matrix</h2>
+                    <p class="text-gray-600 mb-6">A coordinated effort between multiple key roles ensures a smooth process.</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-center space-x-3">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#00A1B1] text-white flex items-center justify-center font-bold">RS</span>
+                            <div>
+                                <h3 class="font-semibold">Resident Specialist</h3>
+                                <p class="text-sm text-gray-500">Manages process from Phase 1 to 8.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#F15A24] text-white flex items-center justify-center font-bold">PH</span>
+                            <div>
+                                <h3 class="font-semibold">Policy Holder</h3>
+                                <p class="text-sm text-gray-500">The insured family receiving services.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-gray-700 text-white flex items-center justify-center font-bold">A</span>
+                            <div>
+                                <h3 class="font-semibold">Adjuster</h3>
+                                <p class="text-sm text-gray-500">Provides approvals and claim details.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#FFC107] text-gray-800 flex items-center justify-center font-bold">MIS</span>
+                            <div>
+                                <h3 class="font-semibold">Move-In Specialist</h3>
+                                <p class="text-sm text-gray-500">Takes over at handoff for execution.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Core Systems & Tools</h2>
+                    <p class="text-gray-600 mb-6">The workflow relies on a matrix of internal and external digital tools. This chart visualizes the relative dependency on each system.</p>
+                    <div class="chart-container">
+                        <canvas id="toolsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">The Search Funnel</h2>
+                    <p class="text-gray-600 mb-6">The housing search is a funnel, narrowing many potential options down to one accepted property that meets all criteria.</p>
+                    <div class="chart-container">
+                        <canvas id="funnelChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2">
+                <div class="card">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2 text-center">The 8-Phase Claim Lifecycle</h2>
+                    <p class="text-gray-600 mb-10 text-center">This flow details the Resident Specialist's journey from the initial adjuster call to the final handoff.</p>
+                    
+                    <div class="flex flex-col items-center">
+                        
+                        <div class="w-full md:w-11/12 lg:w-10/12">
+                            <div class="card border-l-4 border-[#00A1B1]">
+                                <span class="text-sm font-semibold text-[#00A1B1]">PHASE 1</span>
+                                <h3 class="text-xl font-bold mb-3">Claim Creation</h3>
+                                <div class="space-y-3 text-gray-700">
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">1</span>
+                                        <span><strong>Locate Adjuster:</strong> Search Salesforce by name/phone to open Contact Page.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">2</span>
+                                        <span><strong>Initiate Claim:</strong> Click 'New' on the 'Claims' related list.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">3</span>
+                                        <span><strong>Enter Details:</strong> Fill in all known data (LOU, dates, PH info, specs).</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">4</span>
+                                        <span><strong>Assign Teams:</strong> Use Chatter Maps to find and assign the correct RS/CCS.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">5</span>
+                                        <span><strong>Save Claim:</strong> System creates the claim and redirects to the Claim Page.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flow-connector"></div>
+
+                        <div class="w-full md:w-11/12 lg:w-10/12">
+                            <div class="card border-l-4 border-[#00A1B1]">
+                                <span class="text-sm font-semibold text-[#00A1B1]">PHASE 2</span>
+                                <h3 class="text-xl font-bold mb-3">Initial Insured Contact</h3>
+                                <div class="space-y-3 text-gray-700">
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">1</span>
+                                        <span><strong>Open Case:</strong> Receive notification and open the 'Housing Initial Call' case.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">2</span>
+                                        <span><strong>Attempt Contact:</strong> Call PH. If no answer, log 'Attempt Made' to auto-create follow-up tasks.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">3</span>
+                                        <span><strong>Conduct Call:</strong> Use 'Quick Text' template to guide conversational needs-gathering.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">4</span>
+                                        <span><strong>Confirm & Trigger:</strong> Update case status to 'Confirmed Housing', which auto-creates the 'Housing Placement' record.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">5</span>
+                                        <span><strong>Close Case:</strong> Mark the 'Housing Initial Call' case as 'Closed'.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flow-connector"></div>
+
+                        <div class="w-full md:w-11/12 lg:w-10/12">
+                            <div class="card border-l-4 border-[#00A1B1]">
+                                <span class="text-sm font-semibold text-[#00A1B1]">PHASE 3</span>
+                                <h3 class="text-xl font-bold mb-3">Post-Contact Setup</h3>
+                                <div class="space-y-3 text-gray-700">
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">1</span>
+                                        <span><strong>Consolidate Notes:</strong> Paste call notes into 'Additional Housing Call' case and set due date 1 year out to pin it.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">2</span>
+                                        <span><strong>Update Records:</strong> Update PH Contact (email, phone) and Claim (pet details, home specs).</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">3</span>
+                                        <span><strong>Send PH Emails:</strong> Send 'What to Inspect' video and 'Housing Recap' templates.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">4</span>
+                                        <span><strong>Send THA:</strong> Send the Temporary Housing Agreement via the DocuSign task on the Claim Page.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flow-connector"></div>
+
+                        <div class="w-full md:w-11/12 lg:w-10/12">
+                            <div class="card border-l-4 border-[#F15A24]">
+                                <span class="text-sm font-semibold text-[#F15A24]">KEY COMMUNICATION</span>
+                                <h3 class="text-xl font-bold mb-3">24-Hour Adjuster Update</h3>
+                                <div class="space-y-3 text-gray-700">
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#F15A24]">1</span>
+                                        <span><strong>Prep:</strong> Get '24 Hour Update' template from S: Drive and review 'Adjuster Preferences' on Claim Page.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#F15A24]">2</span>
+                                        <span><strong>Send:</strong> Send email from Placement Page, editing template with PH needs and outstanding questions.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#F15A24]">3</span>
+                                        <span><strong>Log:</strong> Use 'Log a Call' to document any follow-up approvals (e.g., "Adjuster approved 3-month term").</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flow-connector"></div>
+
+                        <div class="w-full md:w-11/12 lg:w-10/12">
+                            <div class="card border-l-4 border-[#00A1B1]">
+                                <span class="text-sm font-semibold text-[#00A1B1]">PHASE 4</span>
+                                <h3 class="text-xl font-bold mb-3">Housing Search</h3>
+                                <div class="space-y-3 text-gray-700">
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">1</span>
+                                        <span><strong>Tool 1 (Atom):</strong> Use Atom tool to find MLS options and 'Create Search Pad' automatically.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">2</span>
+                                        <span><strong>Tool 2 (Manual):</strong> Use Zillow/other sites and manually 'New Search Pad' record.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">3</span>
+                                        <span><strong>Vet:</strong> Call landlord to confirm availability, rent, and terms. Check distance on Google.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">4</span>
+                                        <span><strong>Log Confirmation:</strong> Update the 'Landlord Confirmation' task and set Search Pad status to 'Available' or 'Unavailable'.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flow-connector"></div>
+
+                        <div class="w-full md:w-11/12 lg:w-10/12">
+                            <div class="card border-l-4 border-[#00A1B1]">
+                                <span class="text-sm font-semibold text-[#00A1B1]">PHASE 5</span>
+                                <h3 class="text-xl font-bold mb-3">Property Vetting (PSL)</h3>
+                                <div class="space-y-3 text-gray-700">
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">1</span>
+                                        <span><strong>Move to PSL:</strong> Change Search Pad stage to 'PSL' (Property Short List).</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">2</span>
+                                        <span><strong>Complete Details:</strong> Fill out the 'PSL Details' tab (dates, appliances, utilities, pet status).</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">3</span>
+                                        <span><strong>Add Costs:</strong> Use 'Cost Editor' to add all fees, rent, and note deposit responsibilities in comments.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">4</span>
+                                        <span><strong>Pre-Present (If Needed):</strong> Send 'Actionable Request' or manual email (with S: Drive pricing) to adjuster for approval.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">5</span>
+                                        <span><strong>Log Approval:</strong> 'Log a Call' on the Search Pad with the adjuster's email approval.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flow-connector"></div>
+
+                        <div class="w-full md:w-11/12 lg:w-10/12">
+                            <div class="card border-l-4 border-[#00A1B1]">
+                                <span class="text-sm font-semibold text-[#00A1B1]">PHASE 6</span>
+                                <h3 class="text-xl font-bold mb-3">Presentation & Viewing</h3>
+                                <div class="space-y-3 text-gray-700">
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">1</span>
+                                        <span><strong>Set Viewing:</strong> Call PH to present the approved property and schedule a viewing time.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">2</span>
+                                        <span><strong>Update Task:</strong> Set the 'Viewing Due Date' on the 'Results of Viewing' task.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">3</span>
+                                        <span><strong>Get Feedback:</strong> Call PH after the viewing to get their decision.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">4</span>
+                                        <span><strong>Handle Decision:</strong> If Declined, log reason and return to Phase 4. If Accepted, check 'Accept Property'.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">5</span>
+                                        <span><strong>Trigger Acceptance:</strong> Checking 'Accept Property' creates the 'PH Accepted' task.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flow-connector"></div>
+
+                        <div class="w-full md:w-11/12 lg:w-10/12">
+                            <div class="card border-l-4 border-[#00A1B1]">
+                                <span class="text-sm font-semibold text-[#00A1B1]">PHASE 7</span>
+                                <h3 class="text-xl font-bold mb-3">Application & Acceptance</h3>
+                                <div class="space-y-3 text-gray-700">
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">1</span>
+                                        <span><strong>Track Application:</strong> Follow up with landlord and 'Log a Call' when applications are approved.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">2</span>
+                                        <span><strong>Create Furniture Order:</strong> On Placement Page, 'Add Furniture Order', fill in all details, and 'Save' (Status: Working).</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">3</span>
+                                        <span><strong>Send COT:</strong> Use 'Quick Text' on Search Pad to send 'Confirmation of Terms' to landlord (CC the MIS).</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#00A1B1]">4</span>
+                                        <span><strong>Set Expectations:</strong> Call PH to explain MIS handoff, hotel checkout, and utility setup.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flow-connector"></div>
+
+                        <div class="w-full md:w-11/12 lg:w-10/12">
+                            <div class="card border-l-4 border-[#FFC107]">
+                                <span class="text-sm font-semibold text-[#FFC107]">PHASE 8</span>
+                                <h3 class="text-xl font-bold mb-3">Handoff to Move-In Specialist</h3>
+                                <div class="space-y-3 text-gray-700">
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#FFC107]">1</span>
+                                        <span><strong>Finalize Search Pad:</strong> Double-check all dates (move-in, furniture) and details for accuracy.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#FFC107]">2</span>
+                                        <span><strong>Complete 'PH Accepted' Task:</strong> Fill in the embedded template with all final details (THA status, RSD plan, payable info).</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#FFC107]">3</span>
+                                        <span><strong>Reassign Task:</strong> Change 'Assigned To' on the 'PH Accepted' task to the designated MIS.</span>
+                                    </div>
+                                    <div class="sub-phase-item">
+                                        <span class="sub-phase-number bg-[#FFC107]">4</span>
+                                        <span><strong>Reassign Claim:</strong> Change the 'Claim Owner' on the main Claim Page to the MIS.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        const vibrantTeal = '#00A1B1';
+        const brightOrange = '#F15A24';
+        const brightYellow = '#FFC107';
+        const lightGray = '#E0E0E0';
+        const darkText = '#333333';
+
+        const tooltipCallback = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                                return label.join(' ');
+                            } else {
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const kpiCtx = document.getElementById('kpiChart').getContext('2d');
+        new Chart(kpiCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Contact Met (15 Min)', 'Missed'],
+                datasets: [{
+                    label: 'Initial Contact KPI',
+                    data: [92, 8],
+                    backgroundColor: [vibrantTeal, lightGray],
+                    borderColor: ['#ffffff'],
+                    borderWidth: 4,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    ...tooltipCallback.plugins
+                }
+            }
+        });
+
+        const toolsCtx = document.getElementById('toolsChart').getContext('2d');
+        new Chart(toolsCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Salesforce', 'S: Drive', 'Outlook', 'Zillow', 'Atom Tool'],
+                datasets: [{
+                    label: 'System Dependency',
+                    data: [10, 5, 7, 6, 6],
+                    backgroundColor: 'rgba(0, 161, 177, 0.2)',
+                    borderColor: vibrantTeal,
+                    pointBackgroundColor: vibrantTeal,
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: vibrantTeal,
+                    borderWidth: 2,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: {
+                            color: '#e0e0e0'
+                        },
+                        grid: {
+                            color: '#e0e0e0'
+                        },
+                        pointLabels: {
+                            color: darkText,
+                            font: {
+                                size: 12,
+                                weight: '600'
+                            }
+                        },
+                        ticks: {
+                            display: false,
+                            stepSize: 2
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 10
+                    }
+                },
+                ...tooltipCallback
+            }
+        });
+
+        const funnelCtx = document.getElementById('funnelChart').getContext('2d');
+        new Chart(funnelCtx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    ['Properties', 'Found'], 
+                    ['Landlords', 'Contacted'], 
+                    'Vetted (PSL)', 
+                    ['Properties', 'Viewed'], 
+                    'Accepted'
+                ],
+                datasets: [{
+                    label: 'Search Funnel',
+                    data: [20, 15, 5, 2, 1],
+                    backgroundColor: [
+                        vibrantTeal,
+                        'rgba(0, 161, 177, 0.8)',
+                        'rgba(0, 161, 177, 0.6)',
+                        'rgba(0, 161, 177, 0.4)',
+                        brightOrange
+                    ],
+                    borderColor: 'rgba(0, 0, 0, 0)',
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    ...tooltipCallback.plugins
+                }
+            }
+        });
+    </script>
+</body>
+</html>
